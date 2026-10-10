@@ -1,25 +1,25 @@
-# Bytecode files
+# Foundry build output (keep the compiled MockUSDC artifact for the app)
 out/**
+!out/MockUSDC.sol/
+!out/MockUSDC.sol/MockUSDC.json
+
+# Python
 *.pyc
 __pycache__/
 *.cache
+cache/
 
-# Environment variables
+# Environment
 .env
 *.env
 
-# Local configuration
+# Local runtime state
 config.json
+data/
 
 # Temporary files
 /tmp/*
-/tmp/*
 
-# Foundry anvil state
+# Foundry anvil state / logs
 anvil*
-
-# Facilitator log
 facilitator.log
-
-# OS files
-.DS_Store

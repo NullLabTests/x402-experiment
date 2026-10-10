@@ -1,0 +1,53 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{width:1400px;height:400px;font-family:"Inter","Segoe UI",system-ui,sans-serif;overflow:hidden;
+    background:
+      radial-gradient(700px 400px at 8% -20%, rgba(167,139,250,.35), transparent 60%),
+      radial-gradient(700px 500px at 100% 0%, rgba(56,189,248,.28), transparent 55%),
+      radial-gradient(600px 600px at 50% 140%, rgba(124,255,203,.30), transparent 60%),
+      linear-gradient(150deg,#0d1626,#070a12 65%);
+    color:#e8f0ff;position:relative}
+  .grid{position:absolute;inset:0;opacity:.5;
+    background-image:linear-gradient(rgba(255,255,255,.045) 1px,transparent 1px),
+      linear-gradient(90deg,rgba(255,255,255,.045) 1px,transparent 1px);
+    background-size:40px 40px;mask-image:radial-gradient(600px 300px at 40% 40%,#000,transparent 75%)}
+  .content{position:relative;padding:44px 56px;height:100%;display:flex;flex-direction:column;justify-content:center}
+  .logo{width:66px;height:66px;border-radius:20px;margin-bottom:20px;
+    background:conic-gradient(from 210deg,#7CFFCB,#38BDF8,#A78BFA,#7CFFCB);
+    box-shadow:0 0 44px rgba(124,255,203,.55), inset 0 0 20px rgba(0,0,0,.5);
+    display:grid;place-items:center;font-weight:900;font-size:27px;color:#04120c}
+  h1{font-size:46px;font-weight:800;letter-spacing:-.5px;line-height:1.05}
+  h1 b{background:linear-gradient(90deg,#7CFFCB,#38BDF8 55%,#A78BFA);
+    -webkit-background-clip:text;background-clip:text;color:transparent}
+  .tag{margin-top:14px;font-size:17px;color:#b7c6dd;max-width:760px;line-height:1.5}
+  .badges{margin-top:24px;display:flex;gap:10px;flex-wrap:wrap}
+  .badge{font-size:12.5px;font-weight:700;padding:7px 14px;border-radius:999px;
+    background:rgba(255,255,255,.05);border:1px solid rgba(124,255,203,.3);color:#cfe9df}
+  .mono{font-family:ui-monospace,Menlo,monospace;position:absolute;right:56px;top:50%;transform:translateY(-50%);
+    font-size:12px;line-height:2;color:#7CFFCB;text-align:right;opacity:.85}
+  .mono span{color:#8ea3c0}
+  .glowbar{position:absolute;left:0;right:0;bottom:0;height:4px;
+    background:linear-gradient(90deg,#7CFFCB,#38BDF8,#A78BFA,#7CFFCB)}
+</style></head><body>
+  <div class="grid"></div>
+  <div class="content">
+    <div class="logo">x4</div>
+    <h1>x402 × A2A <b>Paper-Trading Experiment</b></h1>
+    <div class="tag">Real EIP-712 / EIP-3009 payment handshake, real facilitator verify &amp; settle,
+      real on-chain balance tracking — on a self-deployed local Anvil chain.</div>
+    <div class="badges">
+      <span class="badge">🏦 chain 31337</span>
+      <span class="badge">🧪 paper mUSDC only</span>
+      <span class="badge">🔐 zero KYC</span>
+      <span class="badge">🖥️ localhost only</span>
+      <span class="badge">✅ H1–H5 PASS</span>
+    </div>
+  </div>
+  <div class="mono">
+    <div>MockUSDC <span>EIP-3009</span></div>
+    <div>Facilitator <span>FastAPI :8000</span></div>
+    <div>Anvil <span>127.0.0.1:8545</span></div>
+  </div>
+  <div class="glowbar"></div>
+</body></html>

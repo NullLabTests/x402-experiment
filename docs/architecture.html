@@ -1,0 +1,96 @@
+<!doctype html>
+<html><head><meta charset="utf-8"><style>
+  *{box-sizing:border-box;margin:0;padding:0}
+  body{width:1400px;height:760px;font-family:"Inter","Segoe UI",system-ui,sans-serif;
+    background:
+      radial-gradient(900px 500px at 10% -10%, rgba(167,139,250,.20), transparent 60%),
+      radial-gradient(900px 600px at 105% 10%, rgba(56,189,248,.16), transparent 55%),
+      radial-gradient(800px 800px at 50% 130%, rgba(124,255,203,.14), transparent 60%),
+      linear-gradient(160deg,#0c1420,#070a12 70%);
+    color:#e8f0ff;padding:34px 40px;position:relative}
+  h1{font-size:26px;letter-spacing:.3px}
+  h1 span{color:#7CFFCB}
+  .sub{color:#8ea3c0;font-size:13px;margin-top:5px}
+  .stage{position:relative;margin-top:22px;height:600px}
+  .lane{position:absolute;left:0;right:0;border-radius:16px;border:1px dashed rgba(255,255,255,.10)}
+  .lane .lab{position:absolute;top:-11px;left:20px;background:#0a1018;padding:0 10px;
+    font-size:11px;letter-spacing:1.6px;text-transform:uppercase;color:#8ea3c0}
+  .box{position:absolute;border-radius:15px;padding:14px 16px;
+    background:linear-gradient(180deg,rgba(255,255,255,.06),rgba(255,255,255,.02));
+    border:1px solid rgba(255,255,255,.10)}
+  .box .t{font-size:14px;font-weight:800}
+  .box .d{font-size:11.5px;color:#8ea3c0;margin-top:5px;line-height:1.5}
+  .box .mono{font-family:ui-monospace,Menlo,monospace;font-size:11px;color:#38BDF8;margin-top:6px;word-break:break-all}
+  .a{border-color:rgba(124,255,203,.4);box-shadow:0 0 34px rgba(124,255,203,.14)}
+  .b{border-color:rgba(167,139,250,.4);box-shadow:0 0 34px rgba(167,139,250,.14)}
+  .f{border-color:rgba(56,189,248,.45);box-shadow:0 0 34px rgba(56,189,248,.16)}
+  .c{border-color:rgba(251,191,36,.4);box-shadow:0 0 30px rgba(251,191,36,.12)}
+  .chain{border-color:rgba(124,255,203,.45);box-shadow:0 0 60px rgba(124,255,203,.10) inset,0 0 40px rgba(124,255,203,.10)}
+  .pill{display:inline-block;font-size:10.5px;font-weight:800;padding:3px 9px;border-radius:999px;margin-right:6px}
+  .pmint{background:rgba(124,255,203,.16);color:#7CFFCB;border:1px solid rgba(124,255,203,.4)}
+  .pvio{background:rgba(167,139,250,.16);color:#A78BFA;border:1px solid rgba(167,139,250,.4)}
+  .pcy{background:rgba(56,189,248,.16);color:#38BDF8;border:1px solid rgba(56,189,248,.4)}
+  .pamb{background:rgba(251,191,36,.16);color:#FBBF24;border:1px solid rgba(251,191,36,.4)}
+  .arrow{position:absolute;color:#7CFFCB;font-size:22px;text-shadow:0 0 14px rgba(124,255,203,.7)}
+  .vlabel{position:absolute;font-family:ui-monospace,monospace;font-size:10.5px;color:#8ea3c0;background:#0a1018;padding:2px 7px;border-radius:6px;border:1px solid rgba(255,255,255,.08)}
+  .footer{position:absolute;bottom:20px;left:40px;right:40px;display:flex;justify-content:space-between;align-items:center;
+    color:#8ea3c0;font-size:11.5px;border-top:1px solid rgba(255,255,255,.07);padding-top:12px}
+  .footer b{color:#7CFFCB}
+</style></head><body>
+  <h1>x402 <span>×</span> A2A Paper-Trading — Architecture</h1>
+  <div class="sub">Local Anvil chain 31337 · worthless paper mUSDC · zero real money · zero KYC</div>
+
+  <div class="stage">
+    <!-- Lane: payers/payees -->
+    <div class="lane" style="top:20px;height:150px"><div class="lab">A2A Personas</div></div>
+    <div class="box a" style="top:52px;left:20px;width:360px">
+      <div class="t">Persona A · payer</div>
+      <div class="d">Signs x402 payment authorization, sends mUSDC on-chain.</div>
+      <div class="mono">0x7099…79C8</div>
+    </div>
+    <div class="box b" style="top:52px;left:1010px;width:360px">
+      <div class="t">Persona B · payee</div>
+      <div class="d">Receives settled mUSDC; balance tracked via ERC-20 balanceOf.</div>
+      <div class="mono">0x3C44…93BC</div>
+    </div>
+
+    <!-- Lane: facilitator -->
+    <div class="lane" style="top:210px;height:140px"><div class="lab">Facilitator Service</div></div>
+    <div class="box f" style="top:242px;left:250px;width:900px">
+      <div class="t"><span class="pill pcy">FastAPI</span>Facilitator · 127.0.0.1:8000</div>
+      <div class="d"><span class="pill pmint">GET /verify</span> payment authorization check &nbsp;
+        <span class="pill pvio">POST /settle</span> payment finalization &nbsp;
+        <span class="pill pamb">CHAOS_*</span> reject / fail / delay modes</div>
+    </div>
+
+    <!-- Lane: chain -->
+    <div class="lane" style="top:390px;height:190px"><div class="lab">Local Chain</div></div>
+    <div class="box chain" style="top:470px;left:20px;width:1350px;height:92px">
+      <div class="t"><span class="pill pmint">chain 31337</span>Anvil · http://127.0.0.1:8545</div>
+      <div class="d" style="margin-top:8px">
+        <b style="color:#e8f0ff">MockUSDC</b>
+        &nbsp;EIP-3009 paper USDC · 6 decimals · transferWithAuthorization / permit · Transfer events
+        &nbsp;·&nbsp; <b style="color:#e8f0ff">10 funded accounts</b> (10000 ETH each)
+      </div>
+      <div class="mono">0x5FbDB2315678afecb367f032d93F642f64180aa3</div>
+    </div>
+    <div class="box c" style="top:300px;left:1180px;width:190px">
+      <div class="t">config.json</div>
+      <div class="d">rpc_url, chain_id,<br>personas, seed = 42</div>
+    </div>
+
+    <!-- connections -->
+    <div class="arrow" style="top:128px;left:400px">⤵</div>
+    <div class="arrow" style="top:128px;left:985px">⤶</div>
+    <div class="vlabel" style="top:112px;left:430px">payment</div>
+    <div class="vlabel" style="top:112px;left:900px">settled</div>
+
+    <div class="arrow" style="top:352px;left:640px;font-size:26px">⇅</div>
+    <div class="vlabel" style="top:384px;left:600px">JSON-RPC · eth_call / eth_sendRawTransaction</div>
+  </div>
+
+  <div class="footer">
+    <div>Foundry · Anvil · FastAPI · A2A · x402 — <b>localhost only</b></div>
+    <div>Paper tokens only · Not financial advice</div>
+  </div>
+</body></html>

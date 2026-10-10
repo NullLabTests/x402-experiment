@@ -1,0 +1,375 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>x402 × A2A · Paper-Trading Console</title>
+<style>
+  :root{
+    --bg0:#070a12; --bg1:#0c1420;
+    --mint:#7CFFCB; --mint-dim:#3fd6a3;
+    --violet:#A78BFA; --amber:#FBBF24; --red:#FF6B6B; --cyan:#38BDF8;
+    --ink:#e8f0ff; --muted:#8ea3c0;
+    --panel:rgba(255,255,255,.035);
+    --stroke:rgba(124,255,203,.16);
+  }
+  *{box-sizing:border-box}
+  html,body{height:100%}
+  body{
+    margin:0;color:var(--ink);
+    font-family:"Inter","Segoe UI",system-ui,-apple-system,sans-serif;
+    background:
+      radial-gradient(1100px 600px at 12% -10%, rgba(167,139,250,.18), transparent 60%),
+      radial-gradient(1000px 700px at 108% 8%, rgba(56,189,248,.14), transparent 55%),
+      radial-gradient(900px 900px at 50% 120%, rgba(124,255,203,.12), transparent 60%),
+      linear-gradient(160deg,var(--bg1),var(--bg0) 70%);
+    min-height:100vh;
+  }
+  .wrap{max-width:1220px;margin:0 auto;padding:26px 26px 60px}
+
+  header.top{display:flex;align-items:center;gap:18px;margin-bottom:22px}
+  .logo{
+    width:54px;height:54px;border-radius:16px;flex:0 0 auto;
+    background:conic-gradient(from 210deg,var(--mint),var(--cyan),var(--violet),var(--mint));
+    box-shadow:0 0 30px rgba(124,255,203,.45), inset 0 0 18px rgba(0,0,0,.5);
+    display:grid;place-items:center;font-weight:800;font-size:22px;color:#04120c;
+  }
+  .titles h1{margin:0;font-size:23px;letter-spacing:.2px}
+  .titles p{margin:4px 0 0;color:var(--muted);font-size:13px}
+
+  .pills{margin-left:auto;display:flex;gap:10px;flex-wrap:wrap}
+  .pill{
+    display:flex;align-items:center;gap:8px;padding:9px 14px;border-radius:999px;
+    background:var(--panel);border:1px solid var(--stroke);font-size:12.5px;color:var(--muted);
+    backdrop-filter:blur(6px);
+  }
+  .dot{width:9px;height:9px;border-radius:50%;background:var(--muted);box-shadow:0 0 0 0 rgba(0,0,0,0)}
+  .dot.on{background:var(--mint);box-shadow:0 0 12px var(--mint);animation:pulse 1.8s infinite}
+  .dot.off{background:var(--red);box-shadow:0 0 10px var(--red)}
+  @keyframes pulse{0%{box-shadow:0 0 0 0 rgba(124,255,203,.5)}70%{box-shadow:0 0 0 9px rgba(124,255,203,0)}100%{box-shadow:0 0 0 0 rgba(124,255,203,0)}}
+
+  .grid{display:grid;grid-template-columns:340px 1fr;gap:20px}
+  @media (max-width:900px){.grid{grid-template-columns:1fr}}
+
+  .card{
+    background:var(--panel);border:1px solid var(--stroke);border-radius:18px;
+    padding:18px;backdrop-filter:blur(8px);
+    box-shadow:0 18px 50px rgba(0,0,0,.35), inset 0 1px 0 rgba(255,255,255,.04);
+  }
+  .card h2{margin:0 0 14px;font-size:13px;letter-spacing:1.6px;text-transform:uppercase;color:var(--mint-dim)}
+  .card h2 .n{color:var(--muted);margin-right:8px}
+
+  .btn{
+    width:100%;text-align:left;display:flex;align-items:center;gap:12px;
+    padding:13px 15px;margin-bottom:10px;border-radius:13px;cursor:pointer;
+    background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.02));
+    border:1px solid rgba(255,255,255,.09);color:var(--ink);font-size:14px;font-weight:600;
+    transition:.18s transform,.18s border-color,.18s box-shadow;
+  }
+  .btn:hover{transform:translateY(-1px);border-color:var(--mint);box-shadow:0 8px 26px rgba(124,255,203,.16)}
+  .btn:active{transform:translateY(0)}
+  .btn .k{
+    width:26px;height:26px;border-radius:9px;display:grid;place-items:center;font-size:12px;font-weight:800;
+    background:linear-gradient(135deg,var(--violet),var(--cyan));color:#05121a;flex:0 0 auto;
+  }
+  .btn small{display:block;font-weight:500;color:var(--muted);font-size:11.5px;margin-top:2px}
+
+  .rail{position:relative;padding:8px 0 4px}
+  .canvaswrap{position:relative;border-radius:14px;overflow:hidden;border:1px solid rgba(255,255,255,.06);background:rgba(0,0,0,.25)}
+  canvas{display:block;width:100%;height:120px}
+  .nodes{display:flex;align-items:stretch;gap:12px;margin-top:16px}
+  .node{
+    flex:1;border-radius:14px;padding:14px;border:1px solid rgba(255,255,255,.08);
+    background:linear-gradient(180deg,rgba(255,255,255,.05),rgba(255,255,255,.015));
+    position:relative;overflow:hidden;
+  }
+  .node .tag{font-size:10.5px;letter-spacing:1.4px;text-transform:uppercase;color:var(--muted)}
+  .node .addr{font-family:ui-monospace,Menlo,monospace;font-size:12px;margin-top:6px;color:var(--cyan);word-break:break-all}
+  .node .bal{font-size:24px;font-weight:800;margin-top:10px}
+  .node .bal span{font-size:12px;color:var(--muted);font-weight:500}
+  .node.a{box-shadow:inset 0 0 0 1px rgba(124,255,203,.25), 0 0 34px rgba(124,255,203,.10)}
+  .node.b{box-shadow:inset 0 0 0 1px rgba(167,139,250,.25), 0 0 34px rgba(167,139,250,.10)}
+  .node.f{box-shadow:inset 0 0 0 1px rgba(56,189,248,.25), 0 0 34px rgba(56,189,248,.10)}
+  .flowline{display:grid;place-items:center;color:var(--muted);font-size:20px;flex:0 0 auto;padding:0 2px}
+
+  .steps{list-style:none;margin:14px 0 0;padding:0}
+  .steps li{
+    display:flex;align-items:center;gap:12px;padding:11px 13px;border-radius:12px;margin-bottom:9px;
+    background:rgba(255,255,255,.025);border:1px solid rgba(255,255,255,.06);
+    animation:slide .35s ease both;
+  }
+  @keyframes slide{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+  .steps .cidx{
+    width:22px;height:22px;border-radius:7px;background:rgba(124,255,203,.16);color:var(--mint);
+    display:grid;place-items:center;font-size:11px;font-weight:800;flex:0 0 auto;
+  }
+  .steps .txt{flex:1;min-width:0}
+  .steps .txt b{font-size:13.5px}
+  .steps .txt small{display:block;color:var(--muted);font-family:ui-monospace,Menlo,monospace;font-size:11px;word-break:break-all}
+  .badge{font-size:11px;font-weight:800;padding:4px 9px;border-radius:999px;white-space:nowrap}
+  .badge.ok{background:rgba(124,255,203,.16);color:var(--mint);border:1px solid rgba(124,255,203,.35)}
+  .badge.warn{background:rgba(251,191,36,.14);color:var(--amber);border:1px solid rgba(251,191,36,.35)}
+  .badge.err{background:rgba(255,107,107,.14);color:var(--red);border:1px solid rgba(255,107,107,.35)}
+
+  .hchecks{display:grid;grid-template-columns:repeat(auto-fit,minmax(190px,1fr));gap:12px;margin-top:6px}
+  .hc{border-radius:14px;padding:14px;border:1px solid rgba(255,255,255,.07);background:linear-gradient(180deg,rgba(255,255,255,.045),rgba(255,255,255,.012))}
+  .hc .id{font-size:12px;font-weight:800;color:var(--violet);letter-spacing:.6px}
+  .hc .qt{font-size:12.5px;margin:6px 0 10px;color:var(--ink);min-height:32px}
+  .hc .ev{font-size:11px;color:var(--muted);font-family:ui-monospace,Menlo,monospace;line-height:1.5}
+  .hc .st{margin-top:10px}
+
+  .sectionhead{display:flex;align-items:center;gap:10px;margin:24px 0 12px}
+  .sectionhead h2{margin:0;font-size:14px;letter-spacing:1.4px;text-transform:uppercase;color:var(--mint-dim)}
+  .sectionhead .line{flex:1;height:1px;background:linear-gradient(90deg,var(--stroke),transparent)}
+
+  .outcome{
+    margin-top:14px;border-radius:14px;padding:14px;display:none;
+    border:1px solid rgba(124,255,203,.3);background:rgba(124,255,203,.06);
+  }
+  .outcome.show{display:block;animation:slide .35s ease both}
+  .outcome h3{margin:0 0 8px;font-size:13px;color:var(--mint)}
+  .kv{display:flex;justify-content:space-between;font-size:12.5px;padding:4px 0;border-bottom:1px dashed rgba(255,255,255,.06)}
+  .kv:last-child{border-bottom:0}
+  .kv span:first-child{color:var(--muted)}
+  .mono{font-family:ui-monospace,Menlo,monospace}
+
+  footer{margin-top:40px;text-align:center;color:var(--muted);font-size:11.5px;line-height:1.7}
+  footer .tagline{color:var(--mint-dim)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header class="top">
+    <div class="logo">x4</div>
+    <div class="titles">
+      <h1>x402 × A2A · Paper-Trading Console</h1>
+      <p>Real EIP-712 / EIP-3009 handshake · local Anvil chain 31337 · worthless paper mUSDC</p>
+    </div>
+    <div class="pills">
+      <div class="pill"><span id="chainDot" class="dot off"></span><span id="chainTxt">chain: …</span></div>
+      <div class="pill">block <b id="blockNum" class="mono" style="color:var(--ink);margin-left:2px">—</b></div>
+      <div class="pill">token <b id="tokenSym" class="mono" style="color:var(--ink);margin-left:2px">—</b></div>
+    </div>
+  </header>
+
+  <div class="grid">
+
+    <aside class="card">
+      <h2><span class="n">01</span>Control Panel</h2>
+      <button class="btn" onclick="doDeploy()">
+        <span class="k">2</span><span>Deploy MockUSDC<small>EIP-3009 paper USDC on chain 31337</small></span>
+      </button>
+      <button class="btn" onclick="doFund()">
+        <span class="k">3</span><span>Fund Personas<small>mint 500 mUSDC to Persona A</small></span>
+      </button>
+      <button class="btn" onclick="doFlow()">
+        <span class="k">4</span><span>Run x402 Flow<small>pay → verify → settle</small></span>
+      </button>
+      <button class="btn" onclick="doChecks()">
+        <span class="k">5</span><span>Inspect H1–H5<small>re-check hypothesis status</small></span>
+      </button>
+
+      <div class="outcome" id="outcome">
+        <h3 id="outcomeTitle">Result</h3>
+        <div id="outcomeBody"></div>
+      </div>
+    </aside>
+
+    <main>
+      <div class="card">
+        <h2><span class="n">02</span>Payment Rail · live signal</h2>
+        <div class="rail">
+          <div class="nodes">
+            <div class="node a">
+              <div class="tag">Persona A · payer</div>
+              <div class="addr" id="addrA">0x7099…79C8</div>
+              <div class="bal" id="balA">0.00 <span>mUSDC</span></div>
+            </div>
+            <div class="flowline">→</div>
+            <div class="node f">
+              <div class="tag">Facilitator</div>
+              <div class="addr">127.0.0.1:8000</div>
+              <div class="bal" style="font-size:15px;margin-top:12px">verify · settle</div>
+            </div>
+            <div class="flowline">→</div>
+            <div class="node b">
+              <div class="tag">Persona B · payee</div>
+              <div class="addr" id="addrB">0x3C44…93BC</div>
+              <div class="bal" id="balB">0.00 <span>mUSDC</span></div>
+            </div>
+          </div>
+          <div class="canvaswrap" style="margin-top:16px"><canvas id="wave" width="1600" height="240"></canvas></div>
+        </div>
+      </div>
+
+      <div class="sectionhead"><h2>03 · x402 Lifecycle</h2><div class="line"></div></div>
+      <ul class="steps" id="stepList">
+        <li><span class="cidx">·</span><div class="txt"><b>Awaiting run</b><small>Click “Run x402 Flow” to execute the payment lifecycle</small></div><span class="badge warn">idle</span></li>
+      </ul>
+    </main>
+  </div>
+
+  <div class="sectionhead"><h2>04 · Hypothesis Checks · H1–H5</h2><div class="line"></div></div>
+  <div class="hchecks" id="hchecks"></div>
+
+  <footer>
+    <div class="tagline">Foundry · Anvil · FastAPI · A2A · x402 — localhost only</div>
+    <div>This experiment uses worthless paper tokens on a local chain. No real money, assets, or KYC is involved. Not financial advice.</div>
+  </footer>
+</div>
+
+<script>
+const API = "";
+const $ = (id) => document.getElementById(id);
+const money = (raw) => (raw ? (raw / 1e6).toFixed(2) : "0.00");
+const short = (a) => a && a.length > 12 ? a.slice(0,6)+"…"+a.slice(-4) : (a||"—");
+
+let waveData = new Array(80).fill(0);
+let alive = true;
+
+function drawWave(boost=0){
+  const c = $("wave"), x = c.getContext("2d");
+  const W = c.width, H = c.height;
+  x.clearRect(0,0,W,H);
+  const grad = x.createLinearGradient(0,0,W,0);
+  grad.addColorStop(0,"rgba(124,255,203,.05)");
+  grad.addColorStop(.5,"rgba(56,189,248,.10)");
+  grad.addColorStop(1,"rgba(167,139,250,.05)");
+  x.fillStyle = grad; x.fillRect(0,0,W,H);
+
+  x.strokeStyle = "rgba(255,255,255,.05)";
+  for(let i=0;i<=4;i++){const y=H*i/4;x.beginPath();x.moveTo(0,y);x.lineTo(W,y);x.stroke();}
+
+  const n = waveData.length, step = W/(n-1);
+  x.lineWidth = 3; x.strokeStyle = "#7CFFCB"; x.shadowColor="#7CFFCB"; x.shadowBlur=16;
+  x.beginPath();
+  waveData.forEach((v,i)=>{const px=i*step, py=H/2 - v*(H*0.42); i?x.lineTo(px,py):x.moveTo(px,py);});
+  x.stroke(); x.shadowBlur=0;
+
+  x.beginPath();
+  waveData.forEach((v,i)=>{const px=i*step, py=H/2 - v*(H*0.42); i?x.lineTo(px,py):x.moveTo(px,py);});
+  x.lineTo(W,H); x.lineTo(0,H); x.closePath();
+  x.fillStyle = "rgba(124,255,203,.08)"; x.fill();
+
+  x.fillStyle = "rgba(255,255,255,.55)"; x.font = "20px ui-monospace,monospace";
+  x.fillText("x402 payment signal", 22, 34);
+  x.fillStyle = "rgba(124,255,203,.9)";
+  x.fillText("▲ LIVE", W-130, 34);
+}
+
+function tick(){
+  if(!alive) return;
+  const last = waveData[waveData.length-1];
+  const next = Math.max(-1, Math.min(1, last*0.72 + (Math.random()-0.48)*0.9));
+  waveData.push(next); waveData.shift();
+  drawWave();
+  requestAnimationFrame(tick);
+}
+drawWave(); requestAnimationFrame(tick);
+
+function burst(){
+  waveData = waveData.map((_,i)=> Math.sin(i/3)*0.6 + (Math.random()-.5)*0.5);
+}
+
+async function refresh(){
+  try{
+    const r = await fetch(API+"/api/status"); const s = await r.json();
+    const on = !!s.rpc_connected;
+    $("chainDot").className = "dot " + (on ? "on":"off");
+    $("chainTxt").textContent = on ? `chain: ${s.chain_id} · connected` : "chain: offline";
+    $("blockNum").textContent = on ? s.block : "—";
+    $("tokenSym").textContent = s.token ? s.token.symbol : (s.deployed ? "mUSDC" : "—");
+    if(s.balances){
+      $("balA").innerHTML = money(s.balances.persona_a)+' <span>mUSDC</span>';
+      $("balB").innerHTML = money(s.balances.persona_b)+' <span>mUSDC</span>';
+    }
+  }catch(e){
+    $("chainDot").className="dot off"; $("chainTxt").textContent="chain: offline";
+  }
+}
+
+function outcome(title, rows){
+  $("outcomeTitle").textContent = title;
+  $("outcomeBody").innerHTML = rows.map(([k,v])=>`<div class="kv"><span>${k}</span><span class="mono" style="color:var(--ink)">${v}</span></div>`).join("");
+  $("outcome").classList.add("show");
+}
+
+function renderSteps(steps){
+  $("stepList").innerHTML = steps.map((s,i)=>{
+    const ok = s.http ? s.http < 400 : s.status === 1;
+    const cls = ok ? "ok" : "err";
+    const badge = s.http ? `HTTP ${s.http}` : `status ${s.status}`;
+    const sub = s.hash ? s.hash : (s.body ? JSON.stringify(s.body) : "");
+    return `<li><span class="cidx">${i+1}</span><div class="txt"><b>${s.name}</b><small>${s.detail} · ${sub}</small></div><span class="badge ${cls}">${badge}</span></li>`;
+  }).join("");
+}
+
+async function doDeploy(){
+  try{
+    const r = await fetch(API+"/api/deploy",{method:"POST"}); const d = await r.json();
+    if(d.detail){ outcome("Deploy failed",[["error",d.detail]]); return; }
+    burst(); outcome("MockUSDC "+(d.reused?"already deployed":"deployed"), [
+      ["address", d.address], ["tx", d.hash||"reused"], ["gas", d.gas||"—"]
+    ]);
+    refresh();
+  }catch(e){ outcome("Deploy failed",[["error",String(e)]]); }
+}
+
+async function doFund(){
+  try{
+    const r = await fetch(API+"/api/fund",{method:"POST"}); const d = await r.json();
+    if(d.detail){ outcome("Fund failed",[["error",d.detail]]); return; }
+    burst(); outcome("Personas funded", [
+      ["from","deployer → Persona A"], ["tx", d.hash], ["gas", d.gas],
+      ["A", money(d.balances.persona_a)+" mUSDC"], ["B", money(d.balances.persona_b)+" mUSDC"]
+    ]);
+    refresh();
+  }catch(e){ outcome("Fund failed",[["error",String(e)]]); }
+}
+
+async function doFlow(){
+  try{
+    const r = await fetch(API+"/api/flow",{method:"POST",headers:{"Content-Type":"application/json"},
+      body:JSON.stringify({payment_id:"gui-"+Date.now()})});
+    const d = await r.json();
+    if(d.detail){ outcome("Flow failed",[["error",d.detail]]); return; }
+    burst(); renderSteps(d.steps);
+    outcome("x402 lifecycle complete", [
+      ["payment id", d.payment_id], ["contract", short(d.contract)],
+      ["A before → after", money(d.balances_before.persona_a)+" → "+money(d.balances_after.persona_a)],
+      ["B before → after", money(d.balances_before.persona_b)+" → "+money(d.balances_after.persona_b)],
+      ["settle", d.steps[2].body.status]
+    ]);
+    refresh();
+  }catch(e){ outcome("Flow failed",[["error",String(e)]]); }
+}
+
+async function doChecks(){
+  try{
+    const r = await fetch(API+"/api/h1h5"); const d = await r.json();
+    renderChecks(d.checks); outcome("H1–H5 re-checked", d.checks.map(c=>[c.id, c.status]));
+  }catch(e){ outcome("Check failed",[["error",String(e)]]); }
+}
+
+function renderChecks(checks){
+  $("hchecks").innerHTML = checks.map(c=>{
+    const cls = c.status==="PASS" ? "ok" : "warn";
+    return `<div class="hc"><div class="id">${c.id}</div><div class="qt">${c.q}</div>
+      <div class="ev">${c.evidence}</div>
+      <div class="st"><span class="badge ${cls}">${c.status}</span></div></div>`;
+  }).join("");
+}
+
+refresh(); doChecks(); setInterval(refresh, 4000);
+
+const params = new URLSearchParams(location.search);
+if (params.has("demo")) {
+  (async () => {
+    await doDeploy(); await doFund(); await doFlow(); await doChecks(); await refresh();
+    document.body.setAttribute("data-demo", "ready");
+  })();
+}
+</script>
+</body>
+</html>
