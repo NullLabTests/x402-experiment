@@ -55,15 +55,19 @@ See [GUIDE.md](GUIDE.md) for full captured evidence.
 
 ```bash
 # 1. Start Anvil + facilitator (one helper)
-bash scripts/stack.sh start
+make up
 
 # 2. (optional) Deploy MockUSDC + fund personas via the API
-curl -X POST http://127.0.0.1:8000/api/deploy
-curl -X POST http://127.0.0.1:8000/api/fund
+make deploy
+make fund
 
 # 3. Open the console
 #    -> http://127.0.0.1:8000/
 #    Run the lifecycle from the UI: Deploy -> Fund -> Run x402 Flow -> Inspect H1-H5
+
+# 4. Verify everything runs
+make test        # forge tests + HTTP integration test
+make gates       # gate-0 .. gate-7
 ```
 
 Prefer the raw endpoints?
@@ -112,6 +116,7 @@ All addresses are **Anvil's well-known test accounts** (public, worthless).
 |--------|------|-------------|
 | `GET`  | `/verify` | x402 payment authorization check |
 | `POST` | `/settle` | x402 payment finalization |
+| `GET`  | `/.well-known/agent.json` | A2A agent card (skills, x402 metadata) |
 | `GET`  | `/api/status` | chain id, block, token meta, live balances |
 | `POST` | `/api/deploy` | deploy MockUSDC (idempotent) |
 | `POST` | `/api/fund` | transfer 500 mUSDC to Persona A |
@@ -160,14 +165,16 @@ The experiment is bound by explicit constraints:
 ## 📚 Project Layout
 
 ```
-├── facilitator/          FastAPI app: /verify, /settle, /api/*, chain helpers
+├── facilitator/          FastAPI app: /verify, /settle, /api/*, agent card, chain helpers
 │   ├── app.py
 │   └── chain.py
 ├── frontend/             web console (single-file, no build step)
 │   └── index.html
-├── foundry/contracts/    MockUSDC.sol — EIP-3009 paper USDC
+├── src/MockUSDC.sol      paper USDC token (x402 authorization surface)
+├── test/MockUSDC.t.sol   forge tests for the token
 ├── docs/                 banner, architecture + screenshots
-├── scripts/              stack.sh (run stack), shot.sh (render screenshots)
+├── scripts/              stack.sh, shot.sh, x402ctl.py, scenarios.py, chaos.sh
+├── test_x402.py          HTTP integration test
 ├── GUIDE.md              H1–H5 answers with captured evidence
 ├── Makefile              gate-0 → gate-7
 └── config.json           runtime configuration
@@ -176,7 +183,7 @@ The experiment is bound by explicit constraints:
 Reproduce the images:
 
 ```bash
-bash scripts/stack.sh start          # bring up chain + facilitator
+make up                              # bring up chain + facilitator
 bash scripts/shot.sh "http://127.0.0.1:8000/?demo=1" docs/screenshots/console.png "1440,1120"
 ```
 

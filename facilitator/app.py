@@ -28,6 +28,43 @@ CHAOS_DELAY_MS = int(os.getenv("CHAOS_DELAY_MS", "0"))
 
 ledger: dict[str, dict] = {}
 
+AGENT_CARD = {
+    "name": "x402 Paper-Trading Facilitator",
+    "description": "Local x402 payment facilitator for worthless paper mUSDC. No real money, no KYC.",
+    "url": "http://127.0.0.1:8000",
+    "version": "1.0.0",
+    "protocolVersion": "0.2.0",
+    "capabilities": {"streaming": False, "pushNotifications": False},
+    "defaultInputModes": ["application/json"],
+    "defaultOutputModes": ["application/json"],
+    "skills": [
+        {
+            "id": "x402-verify",
+            "name": "Payment Authorization",
+            "description": "Verify an x402 payment authorization before settlement.",
+            "tags": ["x402", "payments", "verify"],
+        },
+        {
+            "id": "x402-settle",
+            "name": "Payment Settlement",
+            "description": "Settle an authorized x402 payment on the local chain.",
+            "tags": ["x402", "payments", "settle"],
+        },
+    ],
+    "x402": {"chainId": chain.CHAIN_ID, "asset": "mUSDC", "network": "local/anvil"},
+}
+
+
+@app.get("/.well-known/agent.json")
+async def agent_card():
+    return AGENT_CARD
+
+
+@app.get("/api/agent")
+async def api_agent():
+    return AGENT_CARD
+
+
 
 @app.get("/verify")
 async def verify():

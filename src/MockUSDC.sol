@@ -4,7 +4,9 @@ contract MockUSDC {
     event Transfer(address indexed from, address indexed to, uint256 value);
     event Approval(address indexed owner, address indexed spender, uint256 value);
 
-    event AuthorizationUsed(address indexed from, address indexed to, uint256 amount, bytes32 nonce, bytes32 expires, bytes sig);
+    event AuthorizationUsed(
+        address indexed from, address indexed to, uint256 amount, bytes32 nonce, bytes32 expires, bytes sig
+    );
     event AuthorizationExpired(address indexed spender, bytes32 nonce);
 
     string public constant name_ = "MockUSDC";
@@ -20,7 +22,7 @@ contract MockUSDC {
     constructor(uint256 initialSupply) {
         totalSupply_ = initialSupply;
         balanceOf[msg.sender] = initialSupply;
-        _emitTransfer(address(0), msg.sender, initialSupply);
+        emit Transfer(address(0), msg.sender, initialSupply);
     }
 
     function _emitTransfer(address from, address to, uint256 value) internal {
@@ -60,7 +62,7 @@ contract MockUSDC {
             abi.encodePacked(
                 "\x19\x01",
                 address(this),
-                bytes32(uint256(block.chainid) << 240 | uint256(0x2fba15d5e0e638b7))  // pre-computed EIP-712 domain separator prefix
+                bytes32(uint256(block.chainid) << 240 | uint256(0x2fba15d5e0e638b7)) // pre-computed EIP-712 domain separator prefix
             )
         );
     }
@@ -68,10 +70,7 @@ contract MockUSDC {
     function _hashAuthorization(bytes32 nonce) internal view returns (bytes32) {
         return keccak256(
             abi.encodePacked(
-                "\x19\x01",
-                address(this),
-                bytes32(uint256(block.chainid) << 240 | uint256(0x2fba15d5e0e638b7)),
-                nonce
+                "\x19\x01", address(this), bytes32(uint256(block.chainid) << 240 | uint256(0x2fba15d5e0e638b7)), nonce
             )
         );
     }
@@ -81,39 +80,32 @@ contract MockUSDC {
         return ecrecover(msgHash, v, r, s);
     }
 
-    function permit(
-        address spender,
-        address owner,
-        uint256 amount,
-        uint256 expires,
-        uint8 v,
-        bytes32 r,
-        bytes32 s
-    ) external {
+    function permit(address spender, address owner, uint256 amount, uint256 expires, uint8 v, bytes32 r, bytes32 s)
+        external
+    {
         bytes32 nonce = keccak256(abi.encodePacked("\x00Permit191", owner, amount, expires));
         address recovered = _recoverOwner(v, r, s, nonce);
         require(recovered == owner, "signer mismatch");
         authNonces[owner] = authNonces[owner] + 1;
         _emitTransfer(owner, spender, amount);
-        emit AuthorizationUsed(owner, spender, amount, nonce, keccak256(abi.encodePacked(owner, spender, amount, nonce, expires)), new bytes(0));
+        emit AuthorizationUsed(
+            owner,
+            spender,
+            amount,
+            nonce,
+            keccak256(abi.encodePacked(owner, spender, amount, nonce, expires)),
+            new bytes(0)
+        );
     }
 
-    function transferWithAuthorization(
-        address to,
-        uint256 amount,
-        bytes32 nonce,
-        bytes32 expires
-    ) external {
+    function transferWithAuthorization(address to, uint256 amount, bytes32 nonce, bytes32 expires) external {
         require(_verifyAndExecAuth(msg.sender, to, amount, nonce, expires), "invalid auth");
     }
 
-    function _verifyAndExecAuth(
-        address owner,
-        address to,
-        uint256 amount,
-        bytes32 nonce,
-        bytes32 expires
-    ) internal returns (bool) {
+    function _verifyAndExecAuth(address owner, address to, uint256 amount, bytes32 nonce, bytes32 expires)
+        internal
+        returns (bool)
+    {
         uint256 nun = uint256(nonce) + 1;
         require(authNonces[owner] < nun, "nonce exhausted");
         authNonces[owner] = nun;

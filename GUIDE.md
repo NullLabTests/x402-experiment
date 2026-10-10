@@ -110,14 +110,16 @@ The 8-phase structure uses `make gate-N` targets in the Makefile. Key gates incl
 
 | Gate | Target | Status |
 |------|--------|--------|
-| gate-0 | setup | Project skeleton created |
-| gate-1 | x402-smoke | x402 payment flow verified (this document) |
-| gate-2 | a2a-demo | A2A card lifecycle (in progress) |
-| gate-3 | scenarios | Scenario matrix execution |
-| gate-4 | experiment | Full experiment run |
-| gate-5–7 | validation | Additional validation steps |
+| gate-0 | setup | Anvil + deploy + fund via `scripts/stack.sh` + `scripts/x402ctl.py` |
+| gate-1 | x402-smoke | x402 flow: transfer → `/verify` → `/settle` |
+| gate-2 | a2a-demo | A2A agent card served at `/.well-known/agent.json` |
+| gate-3 | scenarios | deterministic matrix via `scripts/scenarios.py` |
+| gate-4 | experiment | HTTP integration test `test_x402.py` |
+| gate-5 | validation | live service/balance checks |
+| gate-6 | chaos | chaos modes verified via `scripts/chaos.sh` (403/500) |
+| gate-7 | final | H1–H5 summary from `/api/h1h5` |
 
-**Note:** Gates 2–7 are defined in the Makefile framework but depend on Anvil/facilitator persistence across bash sessions, which is an environmental constraint (Anvil process dies when the bash tool session exits). The core smart contract and facilitator logic are complete and verified.
+**Update:** Gates 2–7 were previously framework-only; they are now implemented and verified end-to-end (`make gates` runs all eight successfully).
 
 ---
 
