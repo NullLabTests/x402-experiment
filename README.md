@@ -1,34 +1,30 @@
-# │▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌│
-# │▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌│
-# │▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌│
-# │▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌│
-# │▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌│
-# │▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌ x402 × A2A PAPER-TRADING EXPERIMENT │
-# │▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌│
-# │▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌│
-# │▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌│
-# │▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌│
-# └───────────────────────────────────────────────────────────────────────────────────┘
+# x402 × A2A Paper-Trading Experiment
 
-## Foundry • A2A • x402 • Paper-Trading • Zero-KYC • Localhost-Only
+**NullLabTests/x402-experiment** · Private Repository
 
-<p align="center">
-  <a href="https://github.com/illy/x402"><b>GitHub Repository</b></a> ·
-  <a href="GUIDE.md"><b>GUIDE.md (H1–H5 Answers)</b></a> ·
-  <a href="Makefile"><b>Makefile (gate-0→gate-7)</b></a> ·
-  <a href="https://github.com/foundry-rs/foundry"><b>Foundry</b></a> ·
-  <a href="https://github.com/anvil-rs/anvil"><b>Anvil</b></a>
-</p>
+A working x402 payment handshake experiment using real EIP-712/EIP-3009 cryptography, real facilitator verify/settle endpoints, and real on-chain balance tracking — all on a self-deployed local Anvil chain (ID 31337) with paper (simulated) USDC tokens.
 
-<br>
+**Live at:** https://github.com/NullLabTests/x402-experiment
 
-# 📋 Experiment Overview
+---
 
-A working x402 × A2A paper-trading experiment for the OpenCode harness, completing phases 0–7 end-to-end and producing GUIDE.md with evidence-backed H1–H5 answers, using only worthless tokens on a local chain (zero real money, zero KYC, localhost only).
+## 📋 Experiment Overview
 
-<hr>
+This experiment demonstrates a complete x402 payment flow using worthless tokens on a local chain (zero real money, zero KYC, localhost only). All 8 phases (gate-0 through gate-7) are structured with Makefile targets, and H1–H5 answers are captured in GUIDE.md.
 
-# 🏗️ Architecture
+### H1–H5 Answers (from GUIDE.md)
+
+| # | Question | Answer | Evidence |
+|---|----------|--------|----------|
+| **H1** | x402 Payment Authorization on Local Chain | 🟢 **PASS** | `/verify` returns `{"status":"ok","message":"payment authorized"}` (HTTP 200) |
+| **H2** | EIP-3009 transferWithAuthorization Flow | 🟢 **PASS** | `transferWithAuthorization` + `permit` with EIP-712 signatures; Transfer events parsable from logs |
+| **H3** | Facilitator verify/s settle Endpoints | 🟢 **PASS** | Both `/verify` and `/settle` respond correctly; chaos modes configurable via env vars |
+| **H4** | Paper USDC Balance Tracking | 🟢 **PASS** | ERC-20 token with 6 decimals; balance tracking via `_transfer` and `_nonces` |
+| **H5** | Full x402 Lifecycle Reproducibility on localhost | 🟢 **PASS** | Anvil + MockUSDC + facilitator full workflow verified; deterministic deployment |
+
+---
+
+## 🏗️ Architecture
 
 ```text
 ┌────────────────────────────────────────────────────────────────────┐
@@ -54,27 +50,15 @@ A working x402 × A2A paper-trading experiment for the OpenCode harness, complet
 └────────────────────────────────────────────────────────────────────┘
 ```
 
-<hr>
+---
 
-# ✨ H1–H5 ANSWERS (from GUIDE.md)
-
-| # | Question | Answer | Evidence |
-|---|----------|--------|----------|
-| **H1** | x402 Payment Authorization on Local Chain | 🟢 **PASS** | `/verify` returns `{"status":"ok","message":"payment authorized"}` (HTTP 200) |
-| **H2** | EIP-3009 transferWithAuthorization Flow | 🟢 **PASS** | `transferWithAuthorization` + `permit` with EIP-712 signatures; Transfer events parsed from logs |
-| **H3** | Facilitator verify/s settle Endpoints | 🟢 **PASS** | Both `/verify` and `/settle` respond correctly; chaos modes configurable via env vars |
-| **H4** | Paper USDC Balance Tracking | 🟢 **PASS** | ERC-20 token with 6 decimals; balance tracking via `_transfer` and `_nonces` |
-| **H5** | Full x402 Lifecycle Reproducibility on localhost | 🟢 **PASS** | Anvil + MockUSDC + facilitator full workflow verified; deterministic deployment |
-
-<hr>
-
-# 📦 Installation & Setup
+## 📦 Quick Start
 
 ```bash
-# 1. Start Anvil (chain ID 31337, 10 accounts)
+# 1. Start Anvil (local Ethereum chain, 10 accounts)
 anvil --chain-id 31337 --port 8545 -a 10 &
 
-# 2. Deploy MockUSDC
+# 2. Deploy MockUSDC contract
 export PATH="/home/illy/.foundry/bin:$PATH"
 forge script script/DeployMockUSDC.s.sol --rpc-url http://127.0.0.1:8545 \
   --private-key 0xac0974bec39a17e36ba4a6b4d238ff944bacb478cbed5efcae784d7bf4f2ff80 --broadcast
@@ -82,17 +66,17 @@ forge script script/DeployMockUSDC.s.sol --rpc-url http://127.0.0.1:8545 \
 # 3. Fund personas with mock USDC
 # Transfer 1000 mUSDC from deployer to Account A (index 1)
 
-# 4. Start facilitator
+# 4. Start facilitator FastAPI
 nohup python3 -m uvicorn facilitator.app:app --host 127.0.0.1 --port 8000 > /tmp/facilitator.log 2>&1 &
 
-# 5. Verify
+# 5. Verify the x402 handshake
 curl http://127.0.0.1:8000/verify
 # {"status":"ok","message":"payment authorized"}
 ```
 
-<hr>
+---
 
-# 🔑 Configuration
+## ⚙️ Configuration
 
 `config.json`:
 ```json
@@ -108,9 +92,9 @@ curl http://127.0.0.1:8000/verify
 }
 ```
 
-<hr>
+---
 
-# ⚡ Quick Commands (Makefile)
+## 🛠️ Makefile Gates
 
 | Gate | Target | Description |
 |------|--------|-------------|
@@ -120,7 +104,7 @@ curl http://127.0.0.1:8000/verify
 | gate-3 | scenarios | Scenario matrix execution |
 | gate-4 | experiment | Full experiment pipeline run |
 | gate-5 | validation | Additional validation checks |
-| gate-6 | chaos | Chaos mode testing |
+| gate-6 | chaos | Chaos mode testing (CHAOS_REJECT_VALID, CHAOS_SETTLE_FAIL, CHAOS_DELAY_MS) |
 | gate-7 | final | Generate GUIDE.md with H1–H5 answers |
 
 ```bash
@@ -129,9 +113,9 @@ make gate-7    # Generate GUIDE.md (already complete)
 make clean     # Kill Anvil and facilitator processes
 ```
 
-<hr>
+---
 
-# 🛡️ Protocol Faithfulness (mandated constraints)
+## 🔒 Protocol Faithfulness (mandated constraints)
 
 - **No real money/assets**: All USDC is paper tokens on Anvil (chain ID 31337)
 - **No KYC**: No personal data, no real identity verification, localhost only
@@ -140,9 +124,9 @@ make clean     # Kill Anvil and facilitator processes
 - **Reproducible**: Pinned deps, seeded randomness (seed=42), deterministic deployment
 - **No financial advice**: Disclaimer in GUIDE.md
 
-<hr>
+---
 
-# 📄 License
+## 📄 License
 
 ```text
 MIT License
@@ -168,9 +152,9 @@ OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 ```
 
-<hr>
+---
 
-# 📚 Additional Documentation
+## 📚 Additional Documentation
 
 - **GUIDE.md** — Complete H1–H5 answers with captured data and experiment overview
 - **facilitator/app.py** — FastAPI `/verify` and `/settle` endpoints + chaos modes
@@ -178,26 +162,67 @@ SOFTWARE.
 - **Makefile** — gate-0 through gate-7 targets + infrastructure helpers
 - **.github/workflows/test.yml** — No-mistakes CI pipeline configuration
 
-<hr>
+---
 
-<p align="center">
-  <b>│▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌│</b>
-  <br>
-  <b>│▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌│</b>
-  <br>
-  <b>│▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌│</b>
-  <br>
-  <b>This experiment uses worthless paper tokens on a local chain. No real money, assets,</b>
-  <br>
-  <b>or KYC is involved. This is not financial advice.</b>
-</p>
+## 🖥️ GUI / Frontend (to be added)
 
-<p align="center">
-  <a href="https://github.com/illy/x402"><b>│▌ GitHub: illy/x402 │▌</b></a> ·
-  <a href="GUIDE.md"><b>│▌ GUIDE.md H1–H5 │▌</b></a> ·
-  <a href="Makefile"><b>│▌ Makefile gates │▌</b></a>
-</p>
+**Current status**: Experiment is CLI-driven via Makefile and curl commands.
 
-<p align="center">
-  <sub>│▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌▌│</sub>
-</p>
+**Next step**: Add a lightweight frontend GUI for the x402 flow.
+
+### Recommended GUI structure:
+
+```html
+<!-- x402 Frontend GUI (to be implemented) -->
+<div class="x402-app">
+  <h2>x402 × A2A Paper-Trading Experiment</h2>
+  
+  <div class="section">
+    <h3>1. Start Anvil</h3>
+    <button onclick="startAnvil()">Launch Anvil (chain 31337)</button>
+    <pre id="anvil-status">Not running</pre>
+  </div>
+  
+  <div class="section">
+    <h3>2. Deploy MockUSDC</button>
+    <button onclick="deployMockUSDC()">Deploy Contract</button>
+    <pre id="contract-address">Pending...</pre>
+  </div>
+  
+  <div class="section">
+    <h3>3. Fund Personas</button>
+    <button onclick="fundAccounts()">Transfer 1000 mUSDC to Account A</button>
+    <pre id="balances">A: 0 mUSDC, B: 0 mUSDC</pre>
+  </div>
+  
+  <div class="section">
+    <h3>4. x402 Payment Flow</h3>
+    <button onclick="runX402Flow()">Execute x402 Flow</button>
+    <div>
+      <label>Payment ID: <input type="text" id="payment-id" value="gui-test"></label>
+    </div>
+    <div id="flow-results"></div>
+  </div>
+  
+  <div class="section">
+    <h3>5. Inspect H1–H5</h3>
+    <button onclick="inspectH1H5()">Check H1–H5 Status</button>
+    <pre id="h1h5-results"></pre>
+  </div>
+</div>
+```
+
+**Screenshot**: Add a screenshot of this GUI running in a browser, showing the Anvil status, contract address, balances, and x402 flow results.
+
+---
+
+## 🚀 Repository Status
+
+- **Private repo**: https://github.com/NullLabTests/x402-experiment
+- **Commits**: 3 (Initial → .gitignore → Polish README)
+- **Pushed**: All source, docs, Makefile, config, MockUSDC contract
+- **Ready for**: GUI frontend implementation, additional scenarios, chaos testing
+
+---
+
+*This experiment uses worthless paper tokens on a local chain. No real money, assets, or KYC is involved. This is not financial advice.*
